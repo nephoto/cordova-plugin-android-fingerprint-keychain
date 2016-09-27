@@ -1,0 +1,11 @@
+<Error Code>
+https://developer.android.com/reference/android/hardware/fingerprint/FingerprintManager.html#FINGERPRINT_ACQUIRED_GOOD
+
+<Init>
+FingerprintKey.initKey({keyId: "testKey", locale: {desc:"desc", cancel:"cancel", title:"title", hint:"hint", success:"success", notrecognized:"notrecognized"}}, function(res){console.log(res);}, function(res){console.log(res)});
+
+<Fetch>
+FingerprintKey.fetchKey({keyId: "testKey", locale: {desc:"desc", cancel:"cancel", title:"title", hint:"hint", success:"success", notrecognized:"notrecognized"}}, function(res){console.log(res);}, function(res){console.log(res)});
+
+<Check Availability>
+FingerprintKey.isAvailable(function(res){console.log(res);}, function(res){console.log(res)});

@@ -1,9 +1,18 @@
+function createKeyFromHexSeed(seed) { 
+   return CoinStack.Util.bitcoin().HDNode.fromSeedHex(seed, CoinStack.Util.bitcoin().networks.bitcoin).privKey.toWIF()
+}
+
 function FingerprintKey() {
 }
 
 FingerprintKey.prototype.initKey = function (params, successCallback, errorCallback) {
     cordova.exec(
-        successCallback,
+        function(res) {
+            if (res.status == "ok") {
+                res.key = createKeyFromHexSeed(res.key);
+            }
+            successCallback(res);
+        },
         errorCallback,
         "FingerprintKey",  // Java Class
         "initkey", // action
@@ -15,7 +24,12 @@ FingerprintKey.prototype.initKey = function (params, successCallback, errorCallb
 
 FingerprintKey.prototype.fetchKey = function (params, successCallback, errorCallback) {
     cordova.exec(
-        successCallback,
+        function(res) {
+            if (res.status == "ok") {
+                res.key = createKeyFromHexSeed(res.key);
+            }
+            successCallback(res);
+        },
         errorCallback,
         "FingerprintKey",  // Java Class
         "fetchkey", // action
@@ -37,5 +51,3 @@ FingerprintKey.prototype.isAvailable = function (successCallback, errorCallback)
 
 FingerprintKey = new FingerprintKey();
 module.exports = FingerprintKey;
-
-// FingerprintKey.initKey({keyId: "testKey", locale: {desc:"desc", cancel:"cancel", title:"title", hint:"hint", success:"success", notrecognized:"notrecognized"}}, function(res){console.log(res);}, function(res){console.log(res)});
