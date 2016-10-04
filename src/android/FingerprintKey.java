@@ -173,6 +173,7 @@ public class FingerprintKey extends CordovaPlugin {
                         }
                     });
                 } catch (IOException e) {
+                    e.printStackTrace();
                     mPluginResult = new PluginResult(PluginResult.Status.ERROR);
                     mCallbackContext.error("Failed to generate key");
                     mCallbackContext.sendPluginResult(mPluginResult);    
@@ -259,6 +260,7 @@ public class FingerprintKey extends CordovaPlugin {
                         }
                     });
                 } catch (IOException e) {
+                    e.printStackTrace();
                     mPluginResult = new PluginResult(PluginResult.Status.ERROR);
                     mCallbackContext.error("Failed to generate key");
                     mCallbackContext.sendPluginResult(mPluginResult);    

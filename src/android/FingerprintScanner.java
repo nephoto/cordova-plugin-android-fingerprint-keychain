@@ -90,6 +90,9 @@ public class FingerprintScanner {
             mKeyStore.load(null);
 
             SecretKey key = (SecretKey) mKeyStore.getKey(keyID, null);
+            if (key == null) {
+                return null;
+            }
 
             Mac mac = Mac.getInstance("HmacSHA256");
             mac.init(key);
@@ -101,6 +104,7 @@ public class FingerprintScanner {
                 throw new IOException("Failed to access keystore", e.getCause());
             }
         } catch (Exception e) {
+            e.printStackTrace();
             throw new IOException("Failed to access keystore", e.getCause());
         }
     }
@@ -141,6 +145,11 @@ public class FingerprintScanner {
 
     public void startScan(final Callback callback) throws IOException {
         final Mac mac = this.initCrypto();
+        if (mac == null) {
+            callback.onError(-314);
+            return;
+        }
+
         FingerprintAuthenticationDialogFragment mFragment = new FingerprintAuthenticationDialogFragment();
         mFragment.setLocale(this.locale);
         mFragment.setCallback(new FingerprintAuthenticationDialogFragment.Callback() {
