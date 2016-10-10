@@ -27,7 +27,7 @@ import android.widget.TextView;
 /**
  * Small helper class to manage text/icon around fingerprint authentication UI.
  */
-@TargetApi(23)
+@TargetApi(7)
 public class FingerprintUiHelper extends FingerprintManagerCompat.AuthenticationCallback {
 
     static final long ERROR_TIMEOUT_MILLIS = 1600;

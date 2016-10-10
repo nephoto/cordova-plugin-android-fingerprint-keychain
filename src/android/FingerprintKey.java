@@ -40,7 +40,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
-@TargetApi(23)
+@TargetApi(7)
 public class FingerprintKey extends CordovaPlugin {
 
     public static final String TAG = "FingerprintKey";
@@ -88,14 +88,6 @@ public class FingerprintKey extends CordovaPlugin {
                            CallbackContext callbackContext) throws JSONException {
         mCallbackContext = callbackContext;
         Log.v(TAG, "FingerprintAuth action: " + action);
-        if (android.os.Build.VERSION.SDK_INT < 23) {
-            Log.e(TAG, "minimum SDK version 23 required");
-            mPluginResult = new PluginResult(PluginResult.Status.ERROR);
-            mCallbackContext.error("minimum SDK version 23 required");
-            mCallbackContext.sendPluginResult(mPluginResult);
-            return true;
-        }
-
         final JSONObject arg_object = args.getJSONObject(0);
 
         if (action.equals("initkey")) {
@@ -172,15 +164,20 @@ public class FingerprintKey extends CordovaPlugin {
                             }
                         }
                     });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    mPluginResult = new PluginResult(PluginResult.Status.ERROR);
-                    mCallbackContext.error("Failed to generate key");
-                    mCallbackContext.sendPluginResult(mPluginResult);    
+                } catch (IOException e) {   
+                    JSONObject resultJson = new JSONObject();
+                    resultJson.put("status", "error");
+                    resultJson.put("error", "Failed to generate key");
+                    mPluginResult = new PluginResult(PluginResult.Status.OK);
+                    mCallbackContext.success(resultJson);
+                    mCallbackContext.sendPluginResult(mPluginResult); 
                 }
             } else {
-                mPluginResult = new PluginResult(PluginResult.Status.ERROR);
-                mCallbackContext.error("Fingerprint authentication not available");
+                JSONObject resultJson = new JSONObject();
+                resultJson.put("status", "error");
+                resultJson.put("error", "Fingerprint authentication not available");
+                mPluginResult = new PluginResult(PluginResult.Status.OK);
+                mCallbackContext.success(resultJson);
                 mCallbackContext.sendPluginResult(mPluginResult);
             }
             return true;
@@ -259,28 +256,44 @@ public class FingerprintKey extends CordovaPlugin {
                             }
                         }
                     });
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    mPluginResult = new PluginResult(PluginResult.Status.ERROR);
-                    mCallbackContext.error("Failed to generate key");
-                    mCallbackContext.sendPluginResult(mPluginResult);    
+                } catch (IOException e) {   
+                    JSONObject resultJson = new JSONObject();
+                    resultJson.put("status", "error");
+                    resultJson.put("error", "Failed to generate key");
+                    mPluginResult = new PluginResult(PluginResult.Status.OK);
+                    mCallbackContext.success(resultJson);
+                    mCallbackContext.sendPluginResult(mPluginResult); 
                 }
             } else {
-                mPluginResult = new PluginResult(PluginResult.Status.ERROR);
-                mCallbackContext.error("Fingerprint authentication not available");
+                JSONObject resultJson = new JSONObject();
+                resultJson.put("status", "error");
+                resultJson.put("error", "Fingerprint authentication not available");
+                mPluginResult = new PluginResult(PluginResult.Status.OK);
+                mCallbackContext.success(resultJson);
                 mCallbackContext.sendPluginResult(mPluginResult);
             }
             return true;
         } else if (action.equals("availability")) {
-            FingerprintScanner scanner = new FingerprintScanner(cordova.getActivity(), null);
-            JSONObject resultJson = new JSONObject();
-            resultJson.put("isAvailable", scanner.isFingerprintAvailable());
-            resultJson.put("isHardwareDetected", scanner.isHardwareDetected());
-            resultJson.put("hasEnrolledFingerprints", scanner.hasEnrolledFingerprints());
-            mPluginResult = new PluginResult(PluginResult.Status.OK);
-            mCallbackContext.success(resultJson);
-            mCallbackContext.sendPluginResult(mPluginResult);
+            try {
+                FingerprintScanner scanner = new FingerprintScanner(cordova.getActivity(), null);
+                JSONObject resultJson = new JSONObject();
+                resultJson.put("isAvailable", scanner.isFingerprintAvailable());
+                resultJson.put("isHardwareDetected", scanner.isHardwareDetected());
+                resultJson.put("hasEnrolledFingerprints", scanner.hasEnrolledFingerprints());
+                mPluginResult = new PluginResult(PluginResult.Status.OK);
+                mCallbackContext.success(resultJson);
+                mCallbackContext.sendPluginResult(mPluginResult);
+                return true;
+            } catch (Exception e) {
+                JSONObject resultJson = new JSONObject();
+                resultJson.put("isAvailable", false);
+                resultJson.put("isHardwareDetected", false);
+                resultJson.put("hasEnrolledFingerprints", false);
+                mPluginResult = new PluginResult(PluginResult.Status.OK);
+                mCallbackContext.success(resultJson);
+                mCallbackContext.sendPluginResult(mPluginResult);
             return true;
+            }
         }
         return false;
     }
