@@ -1,11 +1,10 @@
-function createKeyFromHexSeed(seed) { 
-   return CoinStack.Util.bitcoin().HDNode.fromSeedHex(seed, CoinStack.Util.bitcoin().networks.bitcoin).privKey.toWIF()
+function createKeyFromHexSeed(seed) {
+    return CoinStack.Util.bitcoin().HDNode.fromSeedHex(seed, CoinStack.Util.bitcoin().networks.bitcoin).privKey.toWIF()
 }
 
-function FingerprintKey() {
-}
+function FingerprintKey() {}
 
-FingerprintKey.prototype.initKey = function (params, successCallback, errorCallback) {
+FingerprintKey.prototype.initKey = function(params, successCallback, errorCallback) {
     cordova.exec(
         function(res) {
             if (res.status == "ok") {
@@ -14,7 +13,7 @@ FingerprintKey.prototype.initKey = function (params, successCallback, errorCallb
             successCallback(res);
         },
         errorCallback,
-        "FingerprintKey",  // Java Class
+        "FingerprintKey", // Java Class
         "initkey", // action
         [ // Array of arguments to pass to the Java class
             params
@@ -22,7 +21,7 @@ FingerprintKey.prototype.initKey = function (params, successCallback, errorCallb
     );
 };
 
-FingerprintKey.prototype.fetchKey = function (params, successCallback, errorCallback) {
+FingerprintKey.prototype.fetchKey = function(params, successCallback, errorCallback) {
     cordova.exec(
         function(res) {
             if (res.status == "ok") {
@@ -31,7 +30,7 @@ FingerprintKey.prototype.fetchKey = function (params, successCallback, errorCall
             successCallback(res);
         },
         errorCallback,
-        "FingerprintKey",  // Java Class
+        "FingerprintKey", // Java Class
         "fetchkey", // action
         [ // Array of arguments to pass to the Java class
             params
@@ -39,15 +38,16 @@ FingerprintKey.prototype.fetchKey = function (params, successCallback, errorCall
     );
 };
 
-FingerprintKey.prototype.isAvailable = function (successCallback, errorCallback) {
+FingerprintKey.prototype.isAvailable = function(successCallback, errorCallback) {
     cordova.exec(
         successCallback,
         errorCallback,
-        "FingerprintKey",  // Java Class
+        "FingerprintKey", // Java Class
         "availability", // action
         [{}]
     );
 };
 
 FingerprintKey = new FingerprintKey();
+window.FingerprintKey = FingerprintKey;
 module.exports = FingerprintKey;
