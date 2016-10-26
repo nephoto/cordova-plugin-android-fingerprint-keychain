@@ -141,7 +141,29 @@ public class FingerprintScanner {
             sb.append(hexNumber.substring(hexNumber.length() - 2));
         }
         return sb.toString();
-    } 
+    }
+
+    public void startLock(final Callback callback) throws IOException {
+        FingerprintAuthenticationLockDialogFragment mFragment = new FingerprintAuthenticationLockDialogFragment();
+        mFragment.setLocale(this.locale);
+        mFragment.setCallback(new FingerprintAuthenticationLockDialogFragment.Callback() {
+            @Override
+            public void onSuccess() {
+                callback.onSuccess("ok");
+            }
+
+            @Override
+            public void onError(int errCode) {
+                callback.onError(errCode);
+            }
+
+            @Override
+            public void onCancel() {
+                callback.onCancel();
+            }
+        });
+        mFragment.show(this.activity.getFragmentManager(), "FpAuthDialog");
+    }
 
     public void startScan(final Callback callback) throws IOException {
         final Mac mac = this.initCrypto();

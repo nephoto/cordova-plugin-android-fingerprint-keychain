@@ -90,7 +90,72 @@ public class FingerprintKey extends CordovaPlugin {
         Log.v(TAG, "FingerprintAuth action: " + action);
         final JSONObject arg_object = args.getJSONObject(0);
 
-        if (action.equals("initkey")) {
+        if (action.equals("lock")) {
+            FingerprintScanner scanner = new FingerprintScanner(cordova.getActivity(), null);
+                try {
+                    // try to register
+                    FingerprintScanner.Locale locale = new FingerprintScanner.Locale();
+                    if (arg_object.has("locale")) {
+                        locale.descText = arg_object.getJSONObject("locale").getString("desc");//"설명";
+                        locale.titleText = arg_object.getJSONObject("locale").getString("title");//"타이틀";
+                    } else {
+                        locale.descText = "설명";
+                        locale.titleText = "타이틀";
+                    }
+                    scanner.setLocale(locale);
+
+                    scanner.startLock(new FingerprintScanner.Callback() {
+                        @Override
+                        public void onSuccess(String privateKey) {
+                            try {
+                                JSONObject resultJson = new JSONObject();
+                                resultJson.put("status", "ok");
+                                resultJson.put("key", privateKey);
+                                mPluginResult = new PluginResult(PluginResult.Status.OK);
+                                mCallbackContext.success(resultJson);
+                                mCallbackContext.sendPluginResult(mPluginResult);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        @Override
+                        public void onError(int errCode) {
+                            try {
+                                JSONObject resultJson = new JSONObject();
+                                resultJson.put("status", "error");
+                                resultJson.put("error", errCode);
+                                mPluginResult = new PluginResult(PluginResult.Status.OK);
+                                mCallbackContext.success(resultJson);
+                                mCallbackContext.sendPluginResult(mPluginResult);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onCancel() {
+                            try {
+                                JSONObject resultJson = new JSONObject();
+                                resultJson.put("status", "cancelled");
+                                mPluginResult = new PluginResult(PluginResult.Status.OK);
+                                mCallbackContext.success(resultJson);
+                                mCallbackContext.sendPluginResult(mPluginResult);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                } catch (IOException e) {   
+                    e.printStackTrace();
+                    JSONObject resultJson = new JSONObject();
+                    resultJson.put("status", "error");
+                    resultJson.put("error", "Failed to generate key");
+                    mPluginResult = new PluginResult(PluginResult.Status.OK);
+                    mCallbackContext.success(resultJson);
+                    mCallbackContext.sendPluginResult(mPluginResult); 
+                }
+            return true;
+        } else if (action.equals("initkey")) {
             if (!arg_object.has("keyId")) {
                 mPluginResult = new PluginResult(PluginResult.Status.ERROR);
                 mCallbackContext.error("Missing required parameters");

@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <include layout="@layout/fingerprint_dialog_content" />
+        <include layout="@layout/fingerprint_lock_dialog_content" />
 
     </FrameLayout>
 
@@ -45,11 +45,6 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:visibility="invisible" />
-        <Button
-            android:id="@+id/cancel_button"
-            style="?android:attr/buttonBarNegativeButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
