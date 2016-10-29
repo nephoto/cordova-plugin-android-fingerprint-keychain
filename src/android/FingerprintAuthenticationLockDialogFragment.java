@@ -1,5 +1,6 @@
 package com.cordova.plugin.android.fingerprintkey;
 
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.KeyguardManager;
 import android.content.Context;
@@ -74,6 +75,9 @@ public class FingerprintAuthenticationLockDialogFragment extends DialogFragment
                             FingerprintScanner.packageName);
             getDialog().setTitle(getString(fingerprint_auth_dialog_title_id));
         }
+
+        getDialog().setCanceledOnTouchOutside(false);
+
         int fingerprint_dialog_container_id = getResources()
                 .getIdentifier("fingerprint_lock_dialog_container", "layout",
                         FingerprintScanner.packageName);
@@ -104,9 +108,6 @@ public class FingerprintAuthenticationLockDialogFragment extends DialogFragment
             mFingerprintUiHelper.setLocale(this.locale);
         }
 
-
-        updateStage();
-
         // fire up timer
         remaining = 30;
 
@@ -114,11 +115,11 @@ public class FingerprintAuthenticationLockDialogFragment extends DialogFragment
         int fingerprint_hint_id = getResources()
             .getIdentifier("fingerprint_lock_status", "id", FingerprintScanner.packageName);
         final TextView mFingerprintHint = (TextView) v.findViewById(fingerprint_hint_id);
-
+        final Activity activity = getActivity();
         mTask = new TimerTask() {
             @Override
             public void run() {
-                getActivity().runOnUiThread(new Runnable(){
+                activity.runOnUiThread(new Runnable(){
                     @Override
                     public void run() {
                         mFingerprintHint.setText("" + remaining);
@@ -162,33 +163,14 @@ public class FingerprintAuthenticationLockDialogFragment extends DialogFragment
         mFingerprintUiHelper.stopListening();
     }
 
-    /**
-     * Sets the crypto object to be passed in when authenticating with fingerprint.
-     */
-    public void setCryptoObject(FingerprintManagerCompat.CryptoObject cryptoObject) {
-        mCryptoObject = cryptoObject;
-    }
-
-    private void updateStage() {
-    }
-
-    private void showAuthenticationScreen() {
-        // Create the Confirm Credentials screen. You can customize the title and description. Or
-        // we will provide a generic one for you if you leave it null
-        Intent intent = mKeyguardManager.createConfirmDeviceCredentialIntent(null, null);
-        if (intent != null) {
-            startActivityForResult(intent, REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS);
-        }
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS) {
             // Challenge completed, proceed with using cipher
             // The user canceled or didn’t complete the lock screen
             // operation. Go to error/cancellation flow.
-            this.callback.onCancel();
-            dismiss();
+            // this.callback.onCancel();
+            // dismiss();
         }
     }
 
@@ -208,8 +190,8 @@ public class FingerprintAuthenticationLockDialogFragment extends DialogFragment
 
     @Override
     public void onCancel(DialogInterface dialog) {
-        super.onCancel(dialog);
-        this.callback.onCancel();
+        // super.onCancel(dialog);
+        // this.callback.onCancel();
     }
 
     public void setCallback(Callback callback) {
