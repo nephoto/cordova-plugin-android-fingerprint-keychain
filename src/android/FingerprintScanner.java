@@ -103,6 +103,9 @@ public class FingerprintScanner {
             } else {
                 throw new IOException("Failed to access keystore", e.getCause());
             }
+        } catch (android.security.keystore.KeyPermanentlyInvalidatedException e) {
+            System.out.println("key invalidated");
+            return null;
         } catch (Exception e) {
             e.printStackTrace();
             throw new IOException("Failed to access keystore", e.getCause());
