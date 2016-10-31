@@ -71,6 +71,7 @@ public class FingerprintAuthenticationDialogFragment extends DialogFragment
         }
 
         getDialog().setCanceledOnTouchOutside(false);
+        setCancelable(false);
 
         int fingerprint_dialog_container_id = getResources()
                 .getIdentifier("fingerprint_dialog_container", "layout",
