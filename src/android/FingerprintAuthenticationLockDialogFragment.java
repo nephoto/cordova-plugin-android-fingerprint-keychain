@@ -77,6 +77,7 @@ public class FingerprintAuthenticationLockDialogFragment extends DialogFragment
         }
 
         getDialog().setCanceledOnTouchOutside(false);
+        setCancelable(false);
 
         int fingerprint_dialog_container_id = getResources()
                 .getIdentifier("fingerprint_lock_dialog_container", "layout",
@@ -148,50 +149,30 @@ public class FingerprintAuthenticationLockDialogFragment extends DialogFragment
     @Override
     public void onResume() {
         super.onResume();
-        if (mStage == Stage.FINGERPRINT) {
-            mFingerprintUiHelper.startListening(mCryptoObject);
-        }
     }
 
     public void setStage(Stage stage) {
-        mStage = stage;
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mFingerprintUiHelper.stopListening();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS) {
-            // Challenge completed, proceed with using cipher
-            // The user canceled or didn’t complete the lock screen
-            // operation. Go to error/cancellation flow.
-            // this.callback.onCancel();
-            // dismiss();
-        }
     }
 
     @Override
     public void onAuthenticated() {
-        // Callback from FingerprintUiHelper. Let the activity know that authentication was
-        // successful.
-        this.callback.onSuccess();
-        dismiss();
     }
 
     @Override
     public void onError(int errCode) {
-        this.callback.onError(errCode);
-        dismiss();
     }
 
     @Override
     public void onCancel(DialogInterface dialog) {
-        // super.onCancel(dialog);
-        // this.callback.onCancel();
     }
 
     public void setCallback(Callback callback) {
