@@ -98,11 +98,14 @@ public class FingerprintKey extends CordovaPlugin {
                     if (arg_object.has("locale")) {
                         locale.descText = arg_object.getJSONObject("locale").getString("desc");//"설명";
                         locale.titleText = arg_object.getJSONObject("locale").getString("title");//"타이틀";
+                        locale.cancelText = arg_object.getJSONObject("locale").getString("cancel");//"타이틀";
                     } else {
                         locale.descText = "설명";
                         locale.titleText = "타이틀";
+                        locale.cancelText = "취소";
                     }
                     scanner.setLocale(locale);
+                    int waitTime = arg_object.getJSONObject("locale").getInt("locktime");
 
                     scanner.startLock(new FingerprintScanner.Callback() {
                         @Override
@@ -144,7 +147,7 @@ public class FingerprintKey extends CordovaPlugin {
                                 e.printStackTrace();
                             }
                         }
-                    });
+                    }, waitTime);
                 } catch (IOException e) {   
                     e.printStackTrace();
                     JSONObject resultJson = new JSONObject();

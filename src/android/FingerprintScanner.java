@@ -146,7 +146,7 @@ public class FingerprintScanner {
         return sb.toString();
     }
 
-    public void startLock(final Callback callback) throws IOException {
+    public void startLock(final Callback callback, int waitTime) throws IOException {
         FingerprintAuthenticationLockDialogFragment mFragment = new FingerprintAuthenticationLockDialogFragment();
         mFragment.setLocale(this.locale);
         mFragment.setCallback(new FingerprintAuthenticationLockDialogFragment.Callback() {
@@ -165,6 +165,7 @@ public class FingerprintScanner {
                 callback.onCancel();
             }
         });
+        mFragment.setWaitTime(waitTime);
         mFragment.show(this.activity.getFragmentManager(), "FpAuthDialog");
     }
 

@@ -43,6 +43,7 @@ public class FingerprintAuthenticationLockDialogFragment extends DialogFragment
     private TimerTask mTask;
     private Timer mTimer;
     private int remaining;
+    private int waitTime;
 
     public FingerprintAuthenticationLockDialogFragment() {
     }
@@ -83,6 +84,17 @@ public class FingerprintAuthenticationLockDialogFragment extends DialogFragment
                 .getIdentifier("fingerprint_lock_dialog_container", "layout",
                         FingerprintScanner.packageName);
         View v = inflater.inflate(fingerprint_dialog_container_id, container, false);
+        int cancel_button_id = getResources()
+                .getIdentifier("lock_cancel_button", "id", FingerprintScanner.packageName);
+        mCancelButton = (Button) v.findViewById(cancel_button_id);
+        mCancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callback.onCancel();
+                dismiss();
+            }
+        });
+
         int fingerprint_container_id = getResources()
                 .getIdentifier("fingerprint_lock_container", "id", FingerprintScanner.packageName);
         mFingerprintContent = v.findViewById(fingerprint_container_id);
@@ -105,12 +117,13 @@ public class FingerprintAuthenticationLockDialogFragment extends DialogFragment
                     .getIdentifier("fingerprint_lock_status", "id", FingerprintScanner.packageName);
             TextView mFingerprintHint = (TextView) v.findViewById(fingerprint_hint_id);
             mFingerprintHint.setText(this.locale.hintText);
+            mCancelButton.setText(this.locale.cancelText);
 
             mFingerprintUiHelper.setLocale(this.locale);
         }
 
         // fire up timer
-        remaining = 30;
+        remaining = waitTime;
 
 
         int fingerprint_hint_id = getResources()
@@ -140,11 +153,28 @@ public class FingerprintAuthenticationLockDialogFragment extends DialogFragment
         mTimer = new Timer();
          
         mTimer.schedule(mTask, 1000, 1000);
-
-
+        updateStage();
         return v;
     }
 
+    private void updateStage() {
+        int cancel_id = getResources()
+                .getIdentifier("cancel", "string", FingerprintScanner.packageName);
+        switch (mStage) {
+            case FINGERPRINT:
+                if (this.locale != null) {
+                    mCancelButton.setText(this.locale.cancelText);
+                } else {
+                    mCancelButton.setText(cancel_id);
+                }
+                mFingerprintContent.setVisibility(View.VISIBLE);
+                break;
+        }
+    }
+
+    public void setWaitTime(int time) {
+        this.waitTime = time;
+    }
 
     @Override
     public void onResume() {
