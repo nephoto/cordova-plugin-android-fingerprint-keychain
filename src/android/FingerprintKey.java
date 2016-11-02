@@ -122,7 +122,7 @@ public class FingerprintKey extends CordovaPlugin {
                             }
                         }
                         @Override
-                        public void onError(int errCode) {
+                        public void onError(int errCode, int attempts) {
                             try {
                                 JSONObject resultJson = new JSONObject();
                                 resultJson.put("status", "error");
@@ -206,11 +206,12 @@ public class FingerprintKey extends CordovaPlugin {
                         }
 
                         @Override
-                        public void onError(int errCode) {
+                        public void onError(int errCode, int attempts) {
                             try {
                                 JSONObject resultJson = new JSONObject();
                                 resultJson.put("status", "error");
                                 resultJson.put("error", errCode);
+                                resultJson.put("attempts", attempts);
                                 mPluginResult = new PluginResult(PluginResult.Status.OK);
                                 mCallbackContext.success(resultJson);
                                 mCallbackContext.sendPluginResult(mPluginResult);
@@ -298,11 +299,12 @@ public class FingerprintKey extends CordovaPlugin {
                         }
 
                         @Override
-                        public void onError(int errCode) {
+                        public void onError(int errCode, int attempts) {
                             try {
                                 JSONObject resultJson = new JSONObject();
                                 resultJson.put("status", "error");
                                 resultJson.put("error", errCode);
+                                resultJson.put("attempts", attempts);
                                 mPluginResult = new PluginResult(PluginResult.Status.OK);
                                 mCallbackContext.success(resultJson);
                                 mCallbackContext.sendPluginResult(mPluginResult);

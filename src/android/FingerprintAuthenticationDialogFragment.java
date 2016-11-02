@@ -190,7 +190,7 @@ public class FingerprintAuthenticationDialogFragment extends DialogFragment
 
     @Override
     public void onError(int errCode) {
-        this.callback.onError(errCode);
+        this.callback.onError(errCode, mFingerprintUiHelper.getAttempts());
         dismiss();
     }
 
@@ -218,7 +218,7 @@ public class FingerprintAuthenticationDialogFragment extends DialogFragment
     public interface Callback {
         void onSuccess();
 
-        void onError(int errCode);
+        void onError(int errCode, int attempts);
 
         void onCancel();
     }

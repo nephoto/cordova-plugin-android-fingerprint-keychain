@@ -148,6 +148,10 @@ public class FingerprintUiHelper extends FingerprintManagerCompat.Authentication
         }
     }
 
+    public int getAttempts() {
+        return mAttempts;
+    }
+
     @Override
     public void onAuthenticationSucceeded(FingerprintManagerCompat.AuthenticationResult result) {
         mErrorTextView.removeCallbacks(mResetErrorTextRunnable);
@@ -181,7 +185,7 @@ public class FingerprintUiHelper extends FingerprintManagerCompat.Authentication
             .getIdentifier("ic_fp_fail_40px", "drawable", FingerprintScanner.packageName);
         mIcon.setImageResource(ic_fp_40px_id);
         
-        mErrorTextView.setText("test");
+        mErrorTextView.setText(error);
 
         int warning_color_id = mContext.getResources()
                 .getIdentifier("warning_color", "color", FingerprintScanner.packageName);

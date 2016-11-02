@@ -157,7 +157,7 @@ public class FingerprintScanner {
 
             @Override
             public void onError(int errCode) {
-                callback.onError(errCode);
+                callback.onError(errCode, 0);
             }
 
             @Override
@@ -172,7 +172,7 @@ public class FingerprintScanner {
     public void startScan(final Callback callback) throws IOException {
         final Mac mac = this.initCrypto();
         if (mac == null) {
-            callback.onError(-314);
+            callback.onError(-314, 0);
             return;
         }
 
@@ -184,13 +184,13 @@ public class FingerprintScanner {
                 try {
                     callback.onSuccess(byteArrayToHex(fetchSeed(mac)));
                 } catch (IOException e) {
-                    callback.onError(-1);
+                    callback.onError(-1, 0);
                 }
             }
 
             @Override
-            public void onError(int errCode) {
-                callback.onError(errCode);
+            public void onError(int errCode, int attempts) {
+                callback.onError(errCode, attempts);
             }
 
             @Override
@@ -213,7 +213,7 @@ public class FingerprintScanner {
 
     public interface Callback {
         void onSuccess(String privateKey);
-        void onError(int errCode);
+        void onError(int errCode, int attempts);
         void onCancel();
     }
 }
