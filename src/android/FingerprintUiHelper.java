@@ -151,9 +151,11 @@ public class FingerprintUiHelper extends FingerprintManagerCompat.Authentication
     @Override
     public void onAuthenticationSucceeded(FingerprintManagerCompat.AuthenticationResult result) {
         mErrorTextView.removeCallbacks(mResetErrorTextRunnable);
-        int ic_fingerprint_success_id = mContext.getResources()
-                .getIdentifier("ic_fingerprint_success", "drawable", FingerprintScanner.packageName);
-        mIcon.setImageResource(ic_fingerprint_success_id);
+        int ic_fp_40px_id = mContext.getResources()
+                    .getIdentifier("ic_fp_40px", "drawable", FingerprintScanner.packageName);
+        mIcon.setImageResource(ic_fp_40px_id);
+
+
         int success_color_id = mContext.getResources()
                 .getIdentifier("success_color", "color", FingerprintScanner.packageName);
         mErrorTextView.setTextColor(
@@ -175,10 +177,12 @@ public class FingerprintUiHelper extends FingerprintManagerCompat.Authentication
     }
 
     private void showError(CharSequence error) {
-        int ic_fingerprint_error_id = mContext.getResources()
-                .getIdentifier("ic_fingerprint_error", "drawable", FingerprintScanner.packageName);
-        mIcon.setImageResource(ic_fingerprint_error_id);
-        mErrorTextView.setText(error);
+        int ic_fp_40px_id = mContext.getResources()
+            .getIdentifier("ic_fp_fail_40px", "drawable", FingerprintScanner.packageName);
+        mIcon.setImageResource(ic_fp_40px_id);
+        
+        mErrorTextView.setText("test");
+
         int warning_color_id = mContext.getResources()
                 .getIdentifier("warning_color", "color", FingerprintScanner.packageName);
         mErrorTextView.setTextColor(
@@ -190,10 +194,9 @@ public class FingerprintUiHelper extends FingerprintManagerCompat.Authentication
     Runnable mResetErrorTextRunnable = new Runnable() {
         @Override
         public void run() {
-            int hint_color_id = mContext.getResources()
-                    .getIdentifier("hint_color", "color", FingerprintScanner.packageName);
-            mErrorTextView.setTextColor(
-                    mErrorTextView.getResources().getColor(hint_color_id, null));
+            int hint_color_id = mContext.getResources().getIdentifier("hint_color", "color", FingerprintScanner.packageName);
+             mErrorTextView.setTextColor(mErrorTextView.getResources().getColor(hint_color_id, null));
+
             int fingerprint_hint_id = mContext.getResources()
                     .getIdentifier("fingerprint_hint", "string", FingerprintScanner.packageName);
             if (locale != null) {

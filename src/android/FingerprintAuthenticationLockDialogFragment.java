@@ -130,13 +130,14 @@ public class FingerprintAuthenticationLockDialogFragment extends DialogFragment
             .getIdentifier("fingerprint_lock_status", "id", FingerprintScanner.packageName);
         final TextView mFingerprintHint = (TextView) v.findViewById(fingerprint_hint_id);
         final Activity activity = getActivity();
+        final String suffix = "초 후에 재시도 해주시기 바랍니다.";
         mTask = new TimerTask() {
             @Override
             public void run() {
                 activity.runOnUiThread(new Runnable(){
                     @Override
                     public void run() {
-                        mFingerprintHint.setText("" + remaining);
+                        mFingerprintHint.setText("" + remaining + suffix);
                         remaining--;
                         if (remaining == 0) {
                             // quit

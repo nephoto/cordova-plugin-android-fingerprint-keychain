@@ -39,6 +39,11 @@
         <source-file src="res/android/drawable-xhdpi/ic_fp_40px.png" target-dir="res/drawable-xhdpi" />
         <source-file src="res/android/drawable-xxhdpi/ic_fp_40px.png" target-dir="res/drawable-xxhdpi" />
         <source-file src="res/android/drawable-xxxhdpi/ic_fp_40px.png" target-dir="res/drawable-xxxhdpi" />
+        <source-file src="res/android/drawable-hdpi/ic_fp_fail_40px.png" target-dir="res/drawable-hdpi" />
+        <source-file src="res/android/drawable-mdpi/ic_fp_fail_40px.png" target-dir="res/drawable-mdpi" />
+        <source-file src="res/android/drawable-xhdpi/ic_fp_fail_40px.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="res/android/drawable-xxhdpi/ic_fp_fail_40px.png" target-dir="res/drawable-xxhdpi" />
+        <source-file src="res/android/drawable-xxxhdpi/ic_fp_fail_40px.png" target-dir="res/drawable-xxxhdpi" />
         <source-file src="res/android/layout/fingerprint_dialog_container.xml" target-dir="res/layout" />
         <source-file src="res/android/layout/fingerprint_dialog_content.xml" target-dir="res/layout" />
         <source-file src="res/android/layout/fingerprint_lock_dialog_container.xml" target-dir="res/layout" />

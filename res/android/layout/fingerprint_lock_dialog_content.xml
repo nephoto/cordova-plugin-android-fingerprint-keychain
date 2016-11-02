@@ -41,7 +41,7 @@
         android:layout_alignParentTop="true"
         android:text="@string/fingerprint_description"
         android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-        android:textColor="?android:attr/textColorSecondary"/>
+        android:textColor="?android:attr/textColorPrimary"/>
 
 
     <TextView
@@ -56,6 +56,6 @@
         android:gravity="center_vertical"
         android:text="@string/fingerprint_hint"
         android:textSize="50.0px"
-        android:textColor="@color/hint_color" />
+        android:textColor="?android:attr/textColorPrimary" />
 
 </RelativeLayout>
