@@ -209,6 +209,7 @@ public class FingerprintScanner {
         public String hintText = "";
         public String notRecognizedText = "";
         public String successText = "";
+        public String tooManyTries = "";
     }
 
     public interface Callback {

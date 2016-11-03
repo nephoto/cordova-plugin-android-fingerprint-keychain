@@ -118,7 +118,7 @@ public class FingerprintUiHelper extends FingerprintManagerCompat.Authentication
     @Override
     public void onAuthenticationError(int errMsgId, final CharSequence errString) {
         if (!mSelfCancelled) {
-            showError(errString);
+            showError(errMsgId, errString);
             final int errMsgIdFinal = errMsgId;
             mIcon.postDelayed(new Runnable() {
                 @Override
@@ -131,7 +131,7 @@ public class FingerprintUiHelper extends FingerprintManagerCompat.Authentication
 
     @Override
     public void onAuthenticationHelp(int helpMsgId, CharSequence helpString) {
-        showError(helpString);
+        showError(helpMsgId, helpString);
     }
 
     @Override
@@ -141,9 +141,9 @@ public class FingerprintUiHelper extends FingerprintManagerCompat.Authentication
                 .getIdentifier("fingerprint_not_recognized", "string",
                         FingerprintScanner.packageName);
         if (this.locale != null) {
-            showError(this.locale.notRecognizedText);
+            showError(0, this.locale.notRecognizedText);
         } else {
-            showError(mIcon.getResources().getString(
+            showError(0, mIcon.getResources().getString(
                     fingerprint_not_recognized_id));
         }
     }
@@ -180,12 +180,18 @@ public class FingerprintUiHelper extends FingerprintManagerCompat.Authentication
         }, SUCCESS_DELAY_MILLIS);
     }
 
-    private void showError(CharSequence error) {
+    private void showError(int errCode, CharSequence error) {
         int ic_fp_40px_id = mContext.getResources()
             .getIdentifier("ic_fp_fail_40px", "drawable", FingerprintScanner.packageName);
         mIcon.setImageResource(ic_fp_40px_id);
         
-        mErrorTextView.setText(error);
+        switch (errCode) {
+            case 7: 
+                mErrorTextView.setText(locale.tooManyTries);
+                break;
+            default:
+                mErrorTextView.setText(error);
+        }
 
         int warning_color_id = mContext.getResources()
                 .getIdentifier("warning_color", "color", FingerprintScanner.packageName);

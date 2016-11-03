@@ -94,6 +94,8 @@ public class FingerprintAuthenticationLockDialogFragment extends DialogFragment
                 dismiss();
             }
         });
+        int hint_color_id = getContext().getResources().getIdentifier("hint_color", "color", FingerprintScanner.packageName);
+        mCancelButton.setTextColor(mCancelButton.getResources().getColor(hint_color_id, null));
 
         int fingerprint_container_id = getResources()
                 .getIdentifier("fingerprint_lock_container", "id", FingerprintScanner.packageName);

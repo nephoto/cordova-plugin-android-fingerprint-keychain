@@ -180,6 +180,7 @@ public class FingerprintKey extends CordovaPlugin {
                         locale.hintText = arg_object.getJSONObject("locale").getString("hint");//"지문";
                         locale.successText = arg_object.getJSONObject("locale").getString("success");//"인식성공";
                         locale.notRecognizedText = arg_object.getJSONObject("locale").getString("notrecognized");//"인식실패";
+                        locale.tooManyTries = arg_object.getJSONObject("locale").getString("toomanytries");//"인식실패";
                     } else {
                         locale.descText = "설명";
                         locale.cancelText = "취소";
@@ -187,6 +188,7 @@ public class FingerprintKey extends CordovaPlugin {
                         locale.hintText = "지문";
                         locale.successText = "인식성공";
                         locale.notRecognizedText = "인식실패";
+                        locale.tooManyTries = "연속으로 지문 인증을 실패하였습니다. 잠시 후 다시 이용해 주시기 바랍니다";
                     }
                     scanner.setLocale(locale);
 
@@ -273,6 +275,7 @@ public class FingerprintKey extends CordovaPlugin {
                         locale.hintText = arg_object.getJSONObject("locale").getString("hint");//"지문";
                         locale.successText = arg_object.getJSONObject("locale").getString("success");//"인식성공";
                         locale.notRecognizedText = arg_object.getJSONObject("locale").getString("notrecognized");//"인식실패";
+                        locale.tooManyTries = arg_object.getJSONObject("locale").getString("toomanytries");//"인식실패";
                     } else {
                         locale.descText = "설명";
                         locale.cancelText = "취소";
@@ -280,6 +283,7 @@ public class FingerprintKey extends CordovaPlugin {
                         locale.hintText = "지문";
                         locale.successText = "인식성공";
                         locale.notRecognizedText = "인식실패";
+                        locale.tooManyTries = "연속으로 지문 인증을 실패하였습니다. 잠시 후 다시 이용해 주시기 바랍니다";
                     }
                     scanner.setLocale(locale);
 
