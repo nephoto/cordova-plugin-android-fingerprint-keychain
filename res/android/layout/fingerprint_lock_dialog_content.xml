@@ -41,7 +41,7 @@
         android:layout_alignParentTop="true"
         android:text="@string/fingerprint_description"
         android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-        android:textSize="60.0px"
+        android:textSize="18dp"
         android:textColor="?android:attr/textColorPrimary"/>
 
 
@@ -56,7 +56,7 @@
         android:layout_toEndOf="@+id/fingerprint_lock_icon"
         android:gravity="center_vertical"
         android:text="@string/fingerprint_hint"
-        android:textSize="60.0px"
+        android:textSize="16dp"
         android:textColor="?android:attr/textColorPrimary" />
 
 </RelativeLayout>
