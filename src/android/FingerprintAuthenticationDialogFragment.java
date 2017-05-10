@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Gravity;
+//import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -47,7 +49,7 @@ public class FingerprintAuthenticationDialogFragment extends DialogFragment
 
         // Do not create a new Fragment when the Activity is re-created such as orientation changes.
         setRetainInstance(true);
-        setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Material_Light_Dialog);
+        setStyle(DialogFragment.STYLE_NO_TITLE, android.R.style.Theme_Material_Light_Dialog);
 
         mKeyguardManager = (KeyguardManager) getContext().getSystemService(Context.KEYGUARD_SERVICE);
         mFingerprintUiHelperBuilder = new FingerprintUiHelper.FingerprintUiHelperBuilder(
@@ -61,22 +63,30 @@ public class FingerprintAuthenticationDialogFragment extends DialogFragment
         Bundle args = getArguments();
         Log.d(TAG, "disableBackup: " + FingerprintScanner.mDisableBackup);
 
+        int fingerprint_dialog_container_id = getResources()
+                .getIdentifier("fingerprint_dialog_container", "layout",
+                        FingerprintScanner.packageName);
+        View v = inflater.inflate(fingerprint_dialog_container_id, container, false);
+
+        int fingerprint_title_id = getResources()
+                    .getIdentifier("fingerprint_title", "id", FingerprintScanner.packageName);
+        TextView mFingerprintTitle = (TextView) v.findViewById(fingerprint_title_id);
+
         if (this.locale != null) {
+            mFingerprintTitle.setText(this.locale.titleText);
             getDialog().setTitle(this.locale.titleText);
         } else {
+            mFingerprintTitle.setText(this.locale.titleText);
             int fingerprint_auth_dialog_title_id = getResources()
                     .getIdentifier("fingerprint_auth_dialog_title", "string",
                             FingerprintScanner.packageName);
+            mFingerprintTitle.setText(getString(fingerprint_auth_dialog_title_id));
             getDialog().setTitle(getString(fingerprint_auth_dialog_title_id));
         }
 
         getDialog().setCanceledOnTouchOutside(false);
         setCancelable(false);
 
-        int fingerprint_dialog_container_id = getResources()
-                .getIdentifier("fingerprint_dialog_container", "layout",
-                        FingerprintScanner.packageName);
-        View v = inflater.inflate(fingerprint_dialog_container_id, container, false);
         int cancel_button_id = getResources()
                 .getIdentifier("cancel_button", "id", FingerprintScanner.packageName);
         mCancelButton = (Button) v.findViewById(cancel_button_id);
@@ -116,6 +126,12 @@ public class FingerprintAuthenticationDialogFragment extends DialogFragment
             mFingerprintUiHelper.setLocale(this.locale);
         }
 
+/*
+        int fingerprint_title_id = getResources()
+                    .getIdentifier("fingerprint_title", "id", FingerprintScanner.packageName);
+        TextView mFingerprintTitle = (TextView) v.findViewById(fingerprint_title_id);
+        mFingerprintTitle.setText("This is an instance of MyDialogFragment");
+*/
 
         updateStage();
         return v;
