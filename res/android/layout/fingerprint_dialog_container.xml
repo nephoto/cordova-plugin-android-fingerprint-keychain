@@ -18,15 +18,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <TextView
+    android:id="@+id/fingerprint_title"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:text="@string/fingerprint_auth_dialog_title"
+    android:textColor="#000000"
+    android:textSize="22sp" />
+    <View android:id="@+id/fingerprint_headline"
+        android:background="#000000"
+        android:layout_width = "fill_parent"
+        android:layout_height="1dip"
+        android:layout_centerVertical ="true"
+        android:layout_alignParentTop="true"/>
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-
         <include layout="@layout/fingerprint_dialog_content" />
-
     </FrameLayout>
-
     <LinearLayout
         android:id="@+id/buttonPanel"
         android:layout_width="match_parent"
@@ -38,7 +48,6 @@
         android:paddingBottom="4dp"
         android:gravity="bottom"
         style="?android:attr/buttonBarStyle">
-
         <Space
             android:id="@+id/spacer"
             android:layout_width="0dp"
@@ -50,8 +59,6 @@
             style="?android:attr/buttonBarNegativeButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="60.0px"/>
-
+            android:textSize="22sp"/>
     </LinearLayout>
-
 </LinearLayout>
